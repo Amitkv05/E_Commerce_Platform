@@ -1,0 +1,20 @@
+# Node modules
+node_modules/
+
+# Flutter build files
+build/
+*.log
+.pub-cache/
+.dart_tool/
+
+# Environment variables
+.env
+.env.*
+
+# System files
+.DS_Store
+.idea/
+.vscode/
+
+# Docker volumes
+*/mongo_data/
