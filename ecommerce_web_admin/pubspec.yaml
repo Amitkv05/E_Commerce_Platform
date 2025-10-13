@@ -1,0 +1,26 @@
+name: web_admin_for_fullstack
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  cloudinary_public: ^0.23.1
+  cupertino_icons: ^1.0.8
+  file_picker: ^8.1.7
+  flutter:
+    sdk: flutter
+  flutter_admin_scaffold: ^1.4.0
+  flutter_riverpod: ^2.6.1
+  http: ^1.2.2
+  image_picker: ^1.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
