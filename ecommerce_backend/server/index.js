@@ -18,8 +18,9 @@ const orderRouter = require('./routes/order');
 
 // --- 2. INITIALIZE FIREBASE ADMIN SDK ---
 // IMPORTANT: Make sure the path to your service account key is correct.
-const serviceAccount = require('./config/serviceAccountKey.json');
-
+// const serviceAccount = require('./config/serviceAccountKey.json');
+// const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
