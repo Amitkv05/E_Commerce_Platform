@@ -4,7 +4,7 @@ require('dotenv').config(); // Load environment variables
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const admin = require('firebase-admin');
+// const admin = require('firebase-admin');
 
 // Import routers
 const authRouter = require('./routes/auth');
