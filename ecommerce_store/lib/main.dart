@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shopgram/provider/auth/auth_service.dart';
-import 'package:shopgram/provider/user_provider.dart';
 import 'package:shopgram/splash_screen.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
@@ -48,18 +46,18 @@ class MyApp extends ConsumerWidget {
   Future<void> _checkTokenAndSetUser(WidgetRef ref) async {
     // obtain an instace of sharedPreference for local data storage..
     SharedPreferences preferences = await SharedPreferences.getInstance();
-  //   // Retrive the authentication token and user data stored locally..
+    //   // Retrive the authentication token and user data stored locally..
 
-  //   String? token = preferences.getString('auth_token');
-  //   String? userJson = preferences.getString('user');
-  //   // If both token and user data is available, set the user data in the provider..(update the user state)
-  //   if (token != null && userJson != null) {
-  //     ref.read(authServiceProvider).currentUser;
-  //     print('token found');
-  //   } else {
-  //     print('No token found');
-  //     ref.read(authServiceProvider).signOut();
-  //   }
+    //   String? token = preferences.getString('auth_token');
+    //   String? userJson = preferences.getString('user');
+    //   // If both token and user data is available, set the user data in the provider..(update the user state)
+    //   if (token != null && userJson != null) {
+    //     ref.read(authServiceProvider).currentUser;
+    //     print('token found');
+    //   } else {
+    //     print('No token found');
+    //     ref.read(authServiceProvider).signOut();
+    //   }
   }
 
   @override

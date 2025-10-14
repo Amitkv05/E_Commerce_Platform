@@ -26,6 +26,8 @@ dependencies:
   riverpod: ^3.0.0
   shared_preferences: ^2.5.3
   shimmer: ^3.0.0
+  shared:
+    path: ../shared
 
 dev_dependencies:
   flutter_test:

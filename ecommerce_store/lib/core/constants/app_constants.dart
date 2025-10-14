@@ -1,8 +1,9 @@
-const String appUrl = 'https://e-commerce-backend-1-rf4n.onrender.com';
+const String appUrl = 'http://192.168.1.7:3000';
+// const String appUrl = 'https://e-commerce-platform-fvxy.onrender.com';
 
 class AppConstants {
   // App Info
-  static const String appName = 'ShopGram App';
+static const String appName = 'ShopGram App';
   static const String appVersion = '1.0.0';
   static const String appPackageName = 'com.example.ecommerce';
 

@@ -1,6 +1,6 @@
 // In middleware/auth.js
 
-// const admin = require('firebase-admin');
+const admin = require('firebase-admin');
 
 const auth = async (req, res, next) => {
     try {

@@ -1,3 +1,4 @@
+import 'package:e_commerce_vendor_app/constants/app_constants.dart';
 import 'package:e_commerce_vendor_app/provider/vendor_provider.dart';
 import 'package:e_commerce_vendor_app/views/auth/login_screen.dart';
 // import 'package:e_commerce_vendor_app/views/auth/signup_screen.dart';
@@ -33,6 +34,7 @@ class MainApp extends ConsumerWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      title: AppConstants.appName,
       home: FutureBuilder(
           future: checkTokenAndSetUser(ref),
           builder: (context, snapshot) {

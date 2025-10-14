@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
-import 'package:e_commerce_vendor_app/global_variables.dart';
+import 'package:e_commerce_vendor_app/constants/app_constants.dart';
 import 'package:e_commerce_vendor_app/models/subcategory.dart';
 import 'package:e_commerce_vendor_app/services/manage_http_responses.dart';
 import 'package:http/http.dart' as http;
@@ -31,7 +31,7 @@ class SubcategoryController {
           subCategoryName: subCategoryName);
 
       http.Response response = await http.post(
-          Uri.parse("$uri/api/subcategories"),
+          Uri.parse(AppConstants.subCategoriesEndpoint),
           body: subcategory.toJson(),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8",
@@ -51,10 +51,11 @@ class SubcategoryController {
   Future<List<Subcategory>> loadSubcategories() async {
     try {
       // send an http get Request to load the categories
-      http.Response response = await http
-          .get(Uri.parse('$uri/api/subcategories'), headers: <String, String>{
-        "Content-Type": "application/json; charset=UTF-8",
-      });
+      http.Response response = await http.get(
+          Uri.parse(AppConstants.subCategoriesEndpoint),
+          headers: <String, String>{
+            "Content-Type": "application/json; charset=UTF-8",
+          });
       print(response.body);
 
       if (response.statusCode == 200) {
@@ -79,7 +80,7 @@ class SubcategoryController {
     try {
       // send an http get Request to load the categories
       http.Response response = await http.get(
-          Uri.parse('$uri/api/category/$categoryName/subcategories'),
+          Uri.parse('$appUrl/api/category/$categoryName/subcategories'),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8",
           });

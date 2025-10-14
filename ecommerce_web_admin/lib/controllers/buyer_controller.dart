@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:web_admin_for_fullstack/global_variable.dart';
+import 'package:web_admin_for_fullstack/constants/app_constants.dart';
 import 'package:web_admin_for_fullstack/models/buyer.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +10,7 @@ class BuyerController {
     try {
       // send an http get request to fetch banners
       http.Response response = await http.get(
-        Uri.parse("$uri/api/users"),
+        Uri.parse(AppConstants.buyersEndpoint),
         headers: <String, String>{
           "Content-Type": "application/json; charset=UTF-8",
         },

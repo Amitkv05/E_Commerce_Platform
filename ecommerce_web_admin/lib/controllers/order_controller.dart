@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:web_admin_for_fullstack/global_variable.dart';
+import 'package:web_admin_for_fullstack/constants/app_constants.dart';
 import 'package:web_admin_for_fullstack/models/order.dart';
 import 'package:web_admin_for_fullstack/services/manage_http_response.dart';
 
@@ -11,7 +11,7 @@ class OrderController {
     try {
       // send an http get request to get the orders
       http.Response response = await http.get(
-        Uri.parse('$uri/api/orders'),
+        Uri.parse(AppConstants.orderEndpoint),
         // set headers to specify content type as json, ensuring proper encoding and communication with the server
         // Why: the server expects requests to specify the data formate, and in this, we are using json formate
         headers: <String, String>{
@@ -43,7 +43,7 @@ class OrderController {
     try {
       // send an http delete request to delete the order by _id
       http.Response response = await http.delete(
-        Uri.parse('$uri/api/orders/$id'),
+        Uri.parse('$appUrl/api/orders/$id'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

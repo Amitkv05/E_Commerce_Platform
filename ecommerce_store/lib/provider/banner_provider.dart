@@ -29,7 +29,6 @@ class BannerNotifier extends StateNotifier<List<BannerModel>> {
         },
       );
 
-
       if (response.statusCode == 200) {
         // ok
         List<dynamic> data = jsonDecode(response.body);

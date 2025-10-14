@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:http/http.dart' as http;
-import 'package:web_admin_for_fullstack/global_variable.dart';
+import 'package:web_admin_for_fullstack/constants/app_constants.dart';
 import 'package:web_admin_for_fullstack/models/product.dart';
 import 'package:web_admin_for_fullstack/services/manage_http_response.dart';
 
@@ -42,7 +42,8 @@ class ProductController {
             fullName: fullName ?? '',
             subCategory: subCategory,
             images: images);
-        http.Response response = await http.post(Uri.parse("$uri/api/products"),
+        http.Response response = await http.post(
+            Uri.parse(AppConstants.productsEndpoint),
             body: product.toJson(),
             headers: <String, String>{
               "Content-Type": "application/json; charset=UTF-8",

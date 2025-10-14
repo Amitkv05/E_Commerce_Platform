@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
-import 'package:web_admin_for_fullstack/global_variable.dart';
+import 'package:web_admin_for_fullstack/constants/app_constants.dart';
 import 'package:web_admin_for_fullstack/models/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_admin_for_fullstack/services/manage_http_response.dart';
@@ -29,7 +29,8 @@ class CategoryController {
 
       Category category =
           Category(id: "", name: name, image: image, banner: banner);
-      http.Response response = await http.post(Uri.parse("$uri/api/categories"),
+      http.Response response = await http.post(
+          Uri.parse(AppConstants.categoriesEndpoint),
           body: category.toJson(),
           headers: <String, String>{
             "Content-Type": "application/json; charset=UTF-8",
@@ -49,10 +50,11 @@ class CategoryController {
   Future<List<Category>> loadCategories() async {
     try {
       // send an http get Request to load the categories
-      http.Response response = await http
-          .get(Uri.parse('$uri/api/categories'), headers: <String, String>{
-        "Content-Type": "application/json; charset=UTF-8",
-      });
+      http.Response response = await http.get(
+          Uri.parse(AppConstants.categoriesEndpoint),
+          headers: <String, String>{
+            "Content-Type": "application/json; charset=UTF-8",
+          });
       print(response.body);
 
       if (response.statusCode == 200) {

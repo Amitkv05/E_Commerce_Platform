@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:e_commerce_vendor_app/global_variables.dart';
+import 'package:e_commerce_vendor_app/constants/app_constants.dart';
 import 'package:e_commerce_vendor_app/models/vendor.dart';
 import 'package:e_commerce_vendor_app/provider/vendor_provider.dart';
 import 'package:e_commerce_vendor_app/services/manage_http_responses.dart';
@@ -32,7 +32,7 @@ class VendorAuthControllers {
       );
 
       http.Response response = await http.post(
-          Uri.parse("$uri/api/vendor/signup"),
+          Uri.parse(AppConstants.signupEndpoint),
           body: vendor
               .toJson(), //Convert the vendor user object to json fro the request body
           headers: <String, String>{
@@ -61,7 +61,7 @@ class VendorAuthControllers {
       required context}) async {
     try {
       http.Response response = await http.post(
-          Uri.parse('$uri/api/vendor/signin'),
+          Uri.parse(AppConstants.signinEndpoint),
           body: jsonEncode({
             'email': email,
             "password": password

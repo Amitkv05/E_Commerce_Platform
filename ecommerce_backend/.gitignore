@@ -44,7 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 # Ignore Firebase service account key
-config/serviceAccountKey.json
+server/config/serviceAccountKey.json
 .env
 
 

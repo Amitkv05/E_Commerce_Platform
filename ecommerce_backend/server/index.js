@@ -1,12 +1,11 @@
-// server/index.js
-require('dotenv').config(); // Load environment variables
-
+// Import necessary modules
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-// const admin = require('firebase-admin');
+const admin = require('firebase-admin'); // <-- 1. IMPORT FIREBASE ADMIN
 
-// Import routers
+// Import your routers
 const authRouter = require('./routes/auth');
 const bannerRouter = require('./routes/banner');
 const categoryRouter = require('./routes/category');
@@ -16,48 +15,48 @@ const productReviewRouter = require('./routes/rating_review');
 const vendorRouter = require('./routes/vendor');
 const orderRouter = require('./routes/order');
 
-// Initialize Firebase Admin SDK
-try {
-    const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
 
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-    });
+// --- 2. INITIALIZE FIREBASE ADMIN SDK ---
+// IMPORTANT: Make sure the path to your service account key is correct.
+const serviceAccount = require('./config/serviceAccountKey.json');
+// const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
 
-    console.log('Firebase Admin initialized successfully');
-} catch (err) {
-    console.error('Error initializing Firebase Admin:', err.message);
-}
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+// ------------------------------------------
 
-// Initialize Express app
+
+// Create an instance of the express application
 const app = express();
-const PORT = process.env.PORT || 5000;
-const DB = process.env.MONGODB_URI;
+// Define the Port number the server will listen on
+const DB = process.env.MONGO_URI;
+const PORT = process.env.PORT || 3000;
 
-// Middleware
+
+// Apply middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors()); // Enable CORS for all routes and origins
 
-// Routes
-app.use('/auth', authRouter);
-app.use('/banners', bannerRouter);
-app.use('/categories', categoryRouter);
-app.use('/subcategories', subCategoryRouter);
-app.use('/products', productRouter);
-app.use('/reviews', productReviewRouter);
-app.use('/vendors', vendorRouter);
-app.use('/orders', orderRouter);
+// Register your routers
+app.use(authRouter);
+app.use(bannerRouter);
+app.use(categoryRouter);
+app.use(subCategoryRouter);
+app.use(productRouter);
+app.use(productReviewRouter);
+app.use(vendorRouter);
+app.use(orderRouter);
 
-// MongoDB Connection
-mongoose
-    .connect(DB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log('✅ MongoDB connected successfully'))
-    .catch((err) => console.error('❌ MongoDB connection failed:', err.message));
+// Connect to the MongoDB database
+mongoose.connect(DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("MongoDB connection successful");
+}).catch((err) => console.log("MongoDB connection failed:", err));
 
-// Start server
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+// Start the server and listen on the specified port
+app.listen(PORT, "0.0.0.0", function () {
+    console.log(`Server started on http://localhost:${PORT}`);
 });

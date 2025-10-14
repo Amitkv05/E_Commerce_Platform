@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
-import 'package:web_admin_for_fullstack/global_variable.dart';
+import 'package:web_admin_for_fullstack/constants/app_constants.dart';
 import 'package:web_admin_for_fullstack/models/banner_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_admin_for_fullstack/services/manage_http_response.dart';
@@ -20,7 +20,7 @@ class BannerController {
       BannerModel bannerModel = BannerModel(id: '', image: image);
 
       http.Response response = await http.post(
-        Uri.parse("$uri/api/banner"),
+        Uri.parse(AppConstants.bannerEndpoint),
         body: bannerModel.toJson(),
         headers: {
           "Content-Type": "application/json; charset=UTF-8",
@@ -43,7 +43,7 @@ class BannerController {
     try {
       // send an http get request to fetch banners
       http.Response response = await http.get(
-        Uri.parse("$uri/api/banner"),
+        Uri.parse(AppConstants.bannerEndpoint),
         headers: <String, String>{
           "Content-Type": "application/json; charset=UTF-8",
         },

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:e_commerce_vendor_app/global_variables.dart';
+import 'package:e_commerce_vendor_app/constants/app_constants.dart';
 import 'package:e_commerce_vendor_app/models/order_model.dart';
 import 'package:e_commerce_vendor_app/services/manage_http_responses.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +14,7 @@ class OrderController {
       String? token = preferences.getString('auth_token');
       // Send an Http Get request to get the orfers by the buyerID
       http.Response response = await http.get(
-        Uri.parse('$uri/api/orders/vendor/$vendorId'),
+        Uri.parse('$appUrl/api/orders/vendor/$vendorId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': token!,
@@ -49,7 +49,7 @@ class OrderController {
     try {
       // send an http delete request to delete the order by _id
       http.Response response = await http.delete(
-        Uri.parse('$uri/api/orders/$id'),
+        Uri.parse('$appUrl/api/orders/$id'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -73,7 +73,7 @@ class OrderController {
     try {
       // send an http put request to update the order status by _id
       http.Response response = await http.patch(
-        Uri.parse('$uri/api/orders/$id/delivered'),
+        Uri.parse('$appUrl/api/orders/$id/delivered'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -99,7 +99,7 @@ class OrderController {
     try {
       // send an http put request to update the order status by _id
       http.Response response = await http.patch(
-        Uri.parse('$uri/api/orders/$id/processing'),
+        Uri.parse('$appUrl/api/orders/$id/processing'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
