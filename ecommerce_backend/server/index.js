@@ -20,7 +20,7 @@ const orderRouter = require('./routes/order');
 // IMPORTANT: Make sure the path to your service account key is correct.
 // const serviceAccount = require('./config/serviceAccountKey.json');
 // const serviceAccount = require(process.env.FIREBASE_KEY_PATH);
-const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY)
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || require('./config/serviceAccountKey.json'));
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
