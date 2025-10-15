@@ -38,5 +38,42 @@ subCategoryRouter.get('/api/category/:categoryName/subcategories', async (req, r
         res.status(500).json({ error: e.message });
     }
 });
+// 🔴 Delete subcategory by ID
+subCategoryRouter.delete('/api/subcategories/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleted = await SubCategory.findByIdAndDelete(id);
+
+        if (!deleted) {
+            return res.status(404).json({ msg: "Subcategory not found" });
+        }
+
+        res.status(200).json({ msg: "Subcategory deleted successfully" });
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+// 🟡 Update subcategory name
+subCategoryRouter.put('/api/subcategories/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { subCategoryName } = req.body;
+
+        const updatedSubcategory = await SubCategory.findByIdAndUpdate(
+            id,
+            { subCategoryName },
+            { new: true }
+        );
+
+        if (!updatedSubcategory) {
+            return res.status(404).json({ msg: "Subcategory not found" });
+        }
+
+        res.status(200).json(updatedSubcategory);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
 module.exports = subCategoryRouter;

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Primary Colors
-  static const Color primary = Color(0xFF4A90E2);
-  static const Color primaryOne = Colors.teal;
-  static const Color primaryLight = Color(0xFF7AB8F5);
-  static const Color primaryDark = Color(0xFF357ABD);
+  // static const Color primary = Color(0xFF4A90E2);
+  static const Color primary = const Color.fromRGBO(252, 53, 76, 1);
+  // static const Color primaryLight = Color(0xFF7AB8F5);
+  // static const Color primaryDark = Color(0xFF357ABD);
 
   // Secondary Colors
   static const Color secondary = Color(0xFF50C878);
@@ -18,8 +18,10 @@ class AppColors {
   static Color categoriesDark = Colors.yellow.shade700;
 
   // Button Colors
-  static const Color buttonPrimary = Colors.black;
+  static const Color buttonPrimary = primary;
   static const Color removeButton = Color(0xFFEF4444);
+  static Color buttonSecondary = const Color(0xFF6C757D);
+  static Color buttonDisabled = const Color(0xFFC4C4C4);
 
   // Accent Colors
   static const Color accent = Color(0xFFFF6B6B);
@@ -42,6 +44,7 @@ class AppColors {
   static const Color background = Colors.white;
   static const Color surface = Color(0xFFFFFFFF);
   static const Color card = Color(0xFFFAFAFA);
+  static Color info = const Color(0xFF1976D2);
 
   static MaterialColor primarySwatch = MaterialColor(0xFF4A90E2, <int, Color>{
     50: Color(0xFFE3F2FD),

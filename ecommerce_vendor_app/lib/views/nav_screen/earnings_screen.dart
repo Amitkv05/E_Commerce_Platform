@@ -5,40 +5,28 @@ import 'package:e_commerce_vendor_app/provider/vendor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EarningsScreen extends ConsumerStatefulWidget {
+/// ✅ Define this globally (outside the widget class)
+final ordersFutureProvider = FutureProvider<void>((ref) async {
+  final vendor = ref.read(vendorProvider);
+  if (vendor == null || vendor.id.isEmpty) return;
+
+  final controller = OrderController();
+  final orders = await controller.loadOrders(vendorId: vendor.id);
+
+  ref.read(orderProvider.notifier).setOrders(orders);
+  ref.read(totalEarningsProvider.notifier).calculateEarnings(orders);
+});
+
+/// ✅ Widget
+class EarningsScreen extends ConsumerWidget {
   const EarningsScreen({super.key});
 
   @override
-  ConsumerState<EarningsScreen> createState() => _EarningsScreenState();
-}
-
-class _EarningsScreenState extends ConsumerState<EarningsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _fetchOrders();
-  }
-
-  Future<void> _fetchOrders() async {
-    final vendor = ref.read(vendorProvider);
-    if (vendor != null) {
-      final OrderController orderController = OrderController();
-      try {
-        setState(() async {
-          final orders = await orderController.loadOrders(vendorId: vendor.id);
-          ref.read(orderProvider.notifier).setOrders(orders);
-          ref.read(totalEarningsProvider.notifier).calculateEarnings(orders);
-        });
-      } catch (e) {
-        print("Error fetching order: $e");
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final vendor = ref.watch(vendorProvider);
     final totalEarnings = ref.watch(totalEarningsProvider);
+    final ordersFuture = ref.watch(ordersFutureProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -46,65 +34,103 @@ class _EarningsScreenState extends ConsumerState<EarningsScreen> {
             CircleAvatar(
               backgroundColor: Colors.purple,
               child: Text(
-                vendor!.fullName.isNotEmpty
+                (vendor != null && vendor.fullName.isNotEmpty)
                     ? vendor.fullName[0].toUpperCase()
                     : 'U',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(width: 10),
-            SizedBox(
-              width: 200,
+            const SizedBox(width: 10),
+            Expanded(
               child: Text(
-                'Welcome! ${vendor.fullName}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+                'Welcome! ${vendor?.fullName ?? 'Vendor'}',
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              "Total Orders",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
+
+      /// ✅ Properly handle loading, error, and data states
+      body: ordersFuture.when(
+        loading: () => const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                "Loading your earnings...",
+                style: TextStyle(color: Colors.grey),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              '${totalEarnings['totalOrders']}',
-              style: TextStyle(
-                fontSize: 36,
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
+            ],
+          ),
+        ),
+        error: (error, _) => Center(
+          child: Text(
+            'Failed to load data: $error',
+            style: const TextStyle(color: Colors.red),
+          ),
+        ),
+        data: (_) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Card(
+                elevation: 3,
+                margin: const EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Total Orders",
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${totalEarnings['totalOrders']}',
+                        style: const TextStyle(
+                          fontSize: 36,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              "Total Earnings",
-              style: TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
+              const SizedBox(height: 16),
+              Card(
+                elevation: 3,
+                margin: const EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Total Earnings",
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '₹${totalEarnings['totalEarnings'].toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 36,
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text(
-              '₹${totalEarnings['totalEarnings'].toStringAsFixed(2)}',
-              style: TextStyle(
-                fontSize: 36,
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

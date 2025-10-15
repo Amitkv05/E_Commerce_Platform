@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:shopgram/core/theme/app_colors.dart';
 import 'package:shopgram/screens/cart_screen.dart';
 import 'package:shopgram/screens/categoryScreen/category_screen.dart';
 import 'package:shopgram/screens/favorite_screen.dart';
@@ -78,11 +79,9 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(
-                  0.40,
-                ), // semi-transparent background
+                color: AppColors.primary, // semi-transparent background
                 borderRadius: BorderRadius.circular(30),
-                border: Border.all(color: Colors.white.withOpacity(0.2)),
+                border: Border.all(color: AppColors.primary.withOpacity(0.2)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -116,7 +115,7 @@ class _NavigationMenuState extends ConsumerState<NavigationMenu> {
                         scale: isSelected ? 1.3 : 1.0,
                         child: Icon(
                           isSelected ? activeIcons[index] : icons[index],
-                          color: isSelected ? Colors.black : Colors.white,
+                          color: isSelected ? AppColors.primary : Colors.white,
                           size: 26,
                         ),
                       ),

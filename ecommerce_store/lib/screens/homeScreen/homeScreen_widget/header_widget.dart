@@ -3,19 +3,24 @@ import 'package:shopgram/core/theme/app_colors.dart';
 import 'package:shopgram/core/utils/responsive.dart';
 import 'package:shopgram/core/utils/size_config.dart';
 import 'package:shopgram/screens/homeScreen/homeScreen_widget/curve_category_widget.dart';
+import 'package:shopgram/screens/homeScreen/homeScreen_widget/search_product_screen.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final border = OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.white),
+      borderRadius: BorderRadius.circular(16),
+    );
     return Stack(
       children: [
         ClipPath(
           clipper: HeaderClipper(),
           child: Container(
             height: 250,
-            decoration: const BoxDecoration(color: AppColors.primaryOne),
+            decoration: const BoxDecoration(color: AppColors.primary),
           ),
         ),
 
@@ -36,51 +41,81 @@ class HeaderWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Search Bar
-                    Container(
+                    SizedBox(
                       height: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black,
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 12),
-                          const Icon(
-                            Icons.search,
-                            color: AppColors.grey,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              "Search for 'Grocery'",
-                              style: TextStyle(
-                                color: AppColors.grey,
-                                fontSize: 16,
-                              ),
+                      // width: 270,
+                      child: TextField(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => SearchProductScreen(),
                             ),
+                          );
+                        },
+                        decoration: InputDecoration(
+                          // fillColor: Colors.grey.shade300,
+                          fillColor: Colors.white,
+                          filled: true,
+                          prefixIcon: const Icon(Icons.search),
+                          // prefixIconColor: Colors.white,
+                          prefixIconColor: AppColors.primary,
+                          hintText: 'search',
+                          hintStyle: TextStyle(
+                            // color: Colors.white,
+                            color: AppColors.primary,
                           ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.shopping_cart,
-                              color: AppColors.grey,
-                              size: 20,
-                            ),
-                            onPressed: () {},
-                            padding: EdgeInsets.zero,
-                          ),
-                          const SizedBox(width: 12),
-                        ],
+                          border: border,
+                          enabledBorder: border,
+                          focusedBorder: border,
+                          // suffixIcon: const Icon(Icons.tune),
+                        ),
                       ),
                     ),
+                    // Container(
+                    //   height: 50,
+                    //   decoration: BoxDecoration(
+                    //     color: AppColors.white,
+                    //     borderRadius: BorderRadius.circular(25),
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.black,
+                    //         spreadRadius: 1,
+                    //         blurRadius: 5,
+                    //         offset: const Offset(0, 2),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // child: Row(
+                    //   children: [
+                    //     const SizedBox(width: 12),
+                    //     const Icon(
+                    //       Icons.search,
+                    //       color: AppColors.primary,
+                    //       size: 20,
+                    //     ),
+                    //     const SizedBox(width: 8),
+                    //     Expanded(
+                    //       child: Text(
+                    //         "Search for products, categories...",
+                    //         style: TextStyle(
+                    //           color: AppColors.grey,
+                    //           fontSize: 16,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     // IconButton(
+                    //     //   icon: const Icon(
+                    //     //     Icons.shopping_cart,
+                    //     //     color: AppColors.primary,
+                    //     //     size: 20,
+                    //     //   ),
+                    //     //   onPressed: () {},
+                    //     //   padding: EdgeInsets.zero,
+                    //     // ),
+                    //     const SizedBox(width: 12),
+                    //   ],
+                    // ),
+                    // ),
                     SizedBox(height: 2.sh),
                     // Location
                     Center(

@@ -20,6 +20,9 @@ class OrderController {
           'x-auth-token': token!,
         },
       );
+      if (token == null)
+        throw Exception("No auth token found. Please log in again.");
+
       //Check if the reesponse status code is 200(ok)..
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Parse the Json response body into dynamic List

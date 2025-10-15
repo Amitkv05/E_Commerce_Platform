@@ -59,7 +59,7 @@ class _ProductItemsWidgetState extends ConsumerState<ProductItemsWidget> {
                     fit: BoxFit.cover,
                   ),
                   Positioned(
-                    top: 15,
+                    top: 2,
                     right: 5,
                     child: InkWell(
                       onTap: () {
@@ -84,34 +84,37 @@ class _ProductItemsWidgetState extends ConsumerState<ProductItemsWidget> {
                           favoriteProviderData.getFavoriteItems.containsKey(
                             widget.product.id,
                           )
-                          ? Icon(Icons.favorite, color: Colors.red)
-                          : Icon(Icons.favorite_border),
+                          ? Icon(Icons.favorite, color: AppColors.primary)
+                          : Icon(
+                              Icons.favorite_border,
+                              color: AppColors.primary,
+                            ),
                     ),
                   ),
-                  Positioned(
-                    bottom: 5,
-                    right: 5,
-                    child: InkWell(
-                      onTap: isInCart
-                          ? null
-                          : () {
-                              cartProviderData.addProductToCart(
-                                productName: widget.product.productName,
-                                productPrice: widget.product.productPrice,
-                                category: widget.product.category,
-                                image: widget.product.images,
-                                vendorId: widget.product.vendorId,
-                                productQuantity: widget.product.quantity,
-                                quantity: 1,
-                                productId: widget.product.id,
-                                description: widget.product.description,
-                                fullName: widget.product.fullName,
-                              );
-                              showSnackBar(context, widget.product.productName);
-                            },
-                      child: Icon(Icons.shopping_cart_outlined),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 5,
+                  //   right: 5,
+                  //   child: InkWell(
+                  //     onTap: isInCart
+                  //         ? null
+                  //         : () {
+                  //             cartProviderData.addProductToCart(
+                  //               productName: widget.product.productName,
+                  //               productPrice: widget.product.productPrice,
+                  //               category: widget.product.category,
+                  //               image: widget.product.images,
+                  //               vendorId: widget.product.vendorId,
+                  //               productQuantity: widget.product.quantity,
+                  //               quantity: 1,
+                  //               productId: widget.product.id,
+                  //               description: widget.product.description,
+                  //               fullName: widget.product.fullName,
+                  //             );
+                  //             showSnackBar(context, widget.product.productName);
+                  //           },
+                  //     child: Icon(Icons.shopping_cart_outlined),
+                  // ),
+                  // ),
                 ],
               ),
             ),

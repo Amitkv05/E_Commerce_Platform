@@ -150,7 +150,7 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
       // extendBody: false,
       appBar: AppBar(
         title: Text(_selectedSubCategory!.subCategoryName),
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         elevation: 1,
       ),
       body: Stack(

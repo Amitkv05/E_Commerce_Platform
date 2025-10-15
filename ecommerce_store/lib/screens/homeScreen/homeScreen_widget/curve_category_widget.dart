@@ -154,13 +154,12 @@ class _CurvedCategoryScrollState extends ConsumerState<CurvedCategoryScroll>
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
                                       border: Border.all(
-                                        color: AppColors.primaryOne,
+                                        color: AppColors.primary,
                                       ),
                                     ),
                                     child: CircleAvatar(
                                       radius: 28,
-                                      backgroundColor:
-                                          AppColors.categoriesLight,
+                                      backgroundColor: AppColors.white,
                                       child: Image.network(
                                         category.image,
                                         color: AppColors.primary,

@@ -12,13 +12,14 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
+    _timer = Timer(Duration(seconds: 2), () {
       if (mounted) {
         final user = FirebaseAuth.instance.currentUser;
-        
+
         Navigator.pushReplacementNamed(
           context,
           user != null ? '/navigationMenu' : '/login',
@@ -49,11 +50,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   //   });
   // }
 
-  // @override
-  // void dispose() {
-  //   _timer?.cancel(); // Cancel the timer when the widget is disposed
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: 42,
+              child: Image.asset(
+                'assets/bag.png',
+                height: 42,
+                color: AppColors.primary,
+              ),
+            ),
             SizedBox(height: 16),
             Text(
               "E-Commerce App",

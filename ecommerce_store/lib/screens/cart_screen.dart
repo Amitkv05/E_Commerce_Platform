@@ -96,23 +96,23 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       // ),
       title: const Text(
         'Cart',
-        style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 16.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.black,
-            child: IconButton(
-              icon: const Icon(
-                Icons.shopping_bag_outlined,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ),
-      ],
+      // actions: [
+      //   Padding(
+      //     padding: const EdgeInsets.only(right: 16.0),
+      //     child: CircleAvatar(
+      //       backgroundColor: Colors.black,
+      //       child: IconButton(
+      //         icon: const Icon(
+      //           Icons.shopping_bag_outlined,
+      //           color: Colors.white,
+      //         ),
+      //         onPressed: () {},
+      //       ),
+      //     ),
+      //   ),
+      // ],
     );
   }
 

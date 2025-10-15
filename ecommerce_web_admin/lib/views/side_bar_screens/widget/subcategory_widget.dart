@@ -10,46 +10,102 @@ class SubcategoryWidget extends StatefulWidget {
 }
 
 class _SubcategoryWidgetState extends State<SubcategoryWidget> {
-  // A future that will hold the list of categories once loaded from the API
-  late Future<List<Subcategory>> futureSubcategories;
+  final SubcategoryController controller = SubcategoryController();
+  late Future<List<Subcategory>> _futureSubcategories;
 
   @override
   void initState() {
     super.initState();
-    futureSubcategories = SubcategoryController().loadSubcategories();
+    _futureSubcategories = controller.loadSubcategories();
+  }
+
+  void refreshList() {
+    setState(() {
+      _futureSubcategories = controller.loadSubcategories();
+    });
+  }
+
+  void showRenameDialog(Subcategory subcategory) {
+    TextEditingController nameController =
+        TextEditingController(text: subcategory.subCategoryName);
+
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Rename Subcategory'),
+        content: TextField(
+          controller: nameController,
+          decoration: InputDecoration(labelText: 'New name'),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(context), child: Text('Cancel')),
+          ElevatedButton(
+              onPressed: () async {
+                await controller.renameSubcategory(
+                    subcategory.id, nameController.text, context);
+                Navigator.pop(context);
+                refreshList();
+              },
+              child: Text('Save'))
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: futureSubcategories,
+    return FutureBuilder<List<Subcategory>>(
+      future: _futureSubcategories,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
-            child: Text("No Subcategories"),
-          );
+          return Center(child: Text("No Subcategories Found"));
         } else {
-          final subcategories = snapshot.data!;
-          return GridView.builder(
-            shrinkWrap: true,
-            itemCount: subcategories.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6, mainAxisSpacing: 8, crossAxisSpacing: 8),
-            itemBuilder: (context, index) {
-              final subcategory = subcategories[index];
-              return Column(
-                children: [
-                  Image.network(
-                    subcategory.image,
-                    height: 100,
-                    width: 100,
-                  ),
-                  Text(subcategory.subCategoryName),
-                ],
+          // Group by category
+          Map<String, List<Subcategory>> grouped = {};
+          for (var sub in snapshot.data!) {
+            grouped.putIfAbsent(sub.categoryName, () => []).add(sub);
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: grouped.entries.map((entry) {
+              return ExpansionTile(
+                title: Text(
+                  entry.key,
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                children: entry.value.map((sub) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(sub.image),
+                    ),
+                    title: Text(sub.subCategoryName),
+                    trailing: Wrap(
+                      spacing: 10,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit, color: Colors.blue),
+                          onPressed: () => showRenameDialog(sub),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete, color: Colors.red),
+                          onPressed: () async {
+                            await controller.deleteSubcategory(sub.id, context);
+                            refreshList();
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
               );
-            },
+            }).toList(),
           );
         }
       },

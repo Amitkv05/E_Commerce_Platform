@@ -29,6 +29,7 @@ class _ProductGridState extends ConsumerState<ProductGrid> {
       }
     });
   }
+
   @override
   void didUpdateWidget(covariant ProductGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -41,7 +42,6 @@ class _ProductGridState extends ConsumerState<ProductGrid> {
   }
 
   Future<void> _fetchProductBySubCategory(String subCategory) async {
-
     setState(() {
       isLoading = true;
     });

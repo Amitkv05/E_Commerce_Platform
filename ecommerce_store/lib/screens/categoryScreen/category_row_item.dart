@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shopgram/core/theme/app_colors.dart';
 import 'package:shopgram/models/categories_model.dart';
 import 'package:shopgram/models/sub_categories_model.dart'; // Make sure this model exists and is imported
 import 'package:shopgram/provider/sub_categories_provider.dart'; // We need the Notifier class for its fetch logic
@@ -67,18 +68,23 @@ class _CategoryRowItemState extends ConsumerState<CategoryRowItem> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
+                    color: AppColors.primary,
                     widget.category.image,
                     width: 32,
                     height: 32,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) =>
-                        const Icon(Icons.category, size: 24),
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.category,
+                      size: 24,
+                      color: AppColors.primary,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Text(
                   widget.category.name,
                   style: const TextStyle(
+                    color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
